@@ -1,0 +1,206 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.desktop {
+    position: relative;
+    min-height: 100vh;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.desktop::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url("Screenshot 2026-09-20 161254.png");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    filter: blur(8px); 
+    transform: scale(1.03); 
+    z-index: -1;
+}
+
+.top-navbar {
+    width: 100%;
+    height: 38px;
+    background-color: #2b1b17; 
+    border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 20px;
+    color: #ffffff;
+    font-size: 0.9rem;
+    z-index: 10;
+}
+
+.nav-left, .nav-right {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+}
+
+.nav-brand {
+    font-weight: 600;
+}
+
+.center-clock-container {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    padding-top: 50px;
+    color: white;
+    text-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+    user-select: none;
+}
+
+#center-time {
+    font-size: 6.5rem;
+    font-weight: 300;
+    line-height: 1;
+    letter-spacing: -2px;
+}
+
+#center-date-sub {
+    font-size: 1.3rem;
+    margin-top: 12px;
+    opacity: 0.9;
+    font-weight: 400;
+}
+
+.dock {
+    position: absolute;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 8px 16px;
+    background-color: rgba(43, 27, 23, 0.55);
+    backdrop-filter: blur(16px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 20px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+    z-index: 20;
+}
+
+.dock-icon {
+    font-size: 1.8rem;
+    padding: 8px;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: transform 0.2s ease, color 0.2s ease;
+    user-select: none;
+}
+
+.dock-icon:hover {
+    transform: translateY(-8px) scale(1.15);
+    background-color: rgba(255, 255, 255, 0.2);
+}
+
+.window {
+display: none;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 320px;
+    background: rgba(35, 23, 19, 0.85);
+    backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 12px;
+    box-shadow: 0 15px 35px rgba(0,0,0,0.5);
+    color: white;
+    flex-direction: column;
+    overflow: hidden;
+    z-index: 30;
+}
+
+.window-header{
+    background: rgba(0,0,0,0.3);
+    padding: 8px 14px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-weight: 600;
+}
+
+.close-btn {
+    background: #e74c3c;
+    border: none;
+    color: white;
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.window-content {
+    padding: 12px;
+}
+
+.notepad-area {
+    width: 100%;
+    height: 180px;
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 8px;
+    padding: 10px;
+    color: white;
+    font-family: inherit;
+    resize: none;
+    outline: none;
+}
+
+#calc-screen {
+    width: 100%;
+    height: 40px;
+    background: rgba(0,0,0,0.4);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 6px;
+    padding: 8px;
+    color: white;
+    font-size: 1.2rem;
+    text-align: right;
+}
+
+.calc-buttons {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 6px;
+}
+
+.calc-buttons button {
+    padding: 10px;
+    background: rgba(255, 255, 255, 0.1);
+    border: none;
+    border-radius: 6px;
+    color: white;
+    font-size: 1rem;
+    cursor: pointer;
+}
+
+.calc-buttons button:hover {
+    background: rgba(255, 255, 255, 0.25);
+}
+
+.calc-buttons .equal-btn {
+    background: #d35400;
+}
+.calc-buttons .equal-btn:hover {
+    background: #e67e22;
+}

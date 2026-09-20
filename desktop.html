@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Autumn OS</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="desktop">
+
+        <header class="top-navbar">
+            <div class="nav-left">
+                <span class="nav-brand"> Autumn OS</span>
+            </div>
+            <div class="nav-right">
+                <span id="current-date">Sun, Sep 20</span>
+                <span id="battery-status">🔋 100%</span>
+            </div>
+        </header>
+
+
+        <main class="center-clock-container">
+            <h1 id="center-time">4:30</h1>
+            <p id="center-date-sub">Sunday, September 20</p>
+        </main>
+
+        <div class="window" id="app-notepad">
+            <div class="window-header">
+                <span>📝 Notepad</span>
+                <button class="close-btn" onclick="closeApp('app-notepad')">×</button>
+            </div>
+            <div class="window-content">
+                <textarea class="notepad-area" placeholder="Write your thoughts here..."></textarea>
+            </div>
+        </div>
+
+
+        <div class="window" id="app-calculator">
+            <div class="window-header">
+                <span>🧮 Calculator</span>
+                <button class="close-btn" onclick="closeApp('app-calculator')">×</button>
+            </div>
+            <div class="window-content calc-body">
+                <input type="text" id="calc-screen" readonly value="0">
+                <div class="calc-buttons">
+                    <button onclick="clearCalc()">C</button>
+                    <button onclick="appendCalc('/')">/</button>
+                    <button onclick="appendCalc('*')">*</button>
+                    <button onclick="appendCalc('-')">-</button>
+                    <button onclick="appendCalc('7')">7</button>
+                    <button onclick="appendCalc('8')">8</button>
+                    <button onclick="appendCalc('9')">9</button>
+                    <button onclick="appendCalc('+')">+</button>
+                    <button onclick="appendCalc('4')">4</button>
+                    <button onclick="appendCalc('5')">5</button>
+                    <button onclick="appendCalc('6')">6</button>
+                    <button onclick="solveCalc()" class="equal-btn">=</button>
+                    <button onclick="appendCalc('1')">1</button>
+                    <button onclick="appendCalc('2')">2</button>
+                    <button onclick="appendCalc('3')">3</button>
+                    <button onclick="appendCalc('0')">0</button>
+                </div>
+            </div>
+        </div>
+
+        <nav class="dock">
+            <div class="dock-icon" title="Paint" onclick="openApp('app-paint')">🎨</div>
+            <div class="dock-icon" title="Notepad" onclick="openApp('app-notepad')">📝</div>
+            <div class="dock-icon" title="Calculator" onclick="openApp('app-calculator')">🧮</div>
+            <div class="dock-icon" title="Timer" onclick="openApp('app-timer')">⏱️</div>
+            <div class="dock-icon" title="Fall Bucket List" onclick="openApp('app-bucketlist')">🍁</div>
+            <div class="dock-icon" title="Gallery" onclick="openApp('app-gallery')">🖼️</div>
+            <div class="dock-icon" title="Lo-Fi Player" onclick="openApp('app-lofi')">🎧</div>
+        </nav>
+    </div>
+
+    <script>
+        function updateClock() {
+            const now = new Date();
+            const dateShort = now.toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: 'numeric' });
+            document.getElementById('current-date').textContent = dateShort;
+
+            const hours = now.getHours() % 12 || 12;
+            const minutes = String(now.getMinutes()).padStart(2, '0');
+            document.getElementById('center-time').textContent = `${hours}:${minutes}`;
+
+            const dateFull = now.toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric' });
+            document.getElementById('center-date-sub').textContent = dateFull;
+        }
+
+        setInterval(updateClock, 1000);
+        updateClock();
+
+        function updateBattery() {
+            if ('getBattery' in navigator) {
+                navigator.getBattery().then(battery => {
+                    function updateAllBatteryInfo() {
+                        const level = Math.round(battery.level * 100);
+                        const isCharging = battery.charging;
+                        document.getElementById('battery-status').textContent = `${isCharging ? '⚡' : '🔋'} ${level}%`;
+                    }
+
+                    updateAllBatteryInfo();
+
+                    battery.addEventListener('levelchange', updateAllBatteryInfo);
+                    battery.addEventListener('chargingchange', updateAllBatteryInfo);
+                });
+            } else {
+                document.getElementById('battery-status').textContent = '🔋 N/A';
+            }
+        }
+
+        updateBattery();
+
+        function openApp(appId) {
+            const targetWindow = document.getElementById(appId);
+            if (targetWindow) {
+                targetWindow.style.display = 'flex';
+            } else {
+                alert("This app window is coming next!");
+            }
+        }
+
+        function closeApp(appId) {
+            document.getElementById(appId).style.display = 'none';
+        }
+
+        let calcScreen = document.getElementById('calc-screen');
+        function appendCalc(val) {
+            if (calcScreen.value === '0') calcScreen.value = '';
+            calcScreen.value += val;
+        }
+        function clearCalc() {
+            calcScreen.value = '0';
+        }
+        function solveCalc() {
+            try {
+                calcScreen.value = eval(calcScreen.value);
+            } catch {
+                calcScreen.value = 'Error';
+            }
+        }
+    </script>
+</body>
+</html>
