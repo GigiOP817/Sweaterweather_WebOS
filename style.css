@@ -81,34 +81,65 @@
 }
 
 .dock {
-    position: absolute;
-    bottom: 20px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    height: 70px;                  
+    padding: 0 24px;              
+    gap: 16px;                  
+    
+    position: fixed;
+    bottom: 20px;           
     left: 50%;
     transform: translateX(-50%);
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    padding: 8px 16px;
-    background-color: rgba(43, 27, 23, 0.55);
-    backdrop-filter: blur(16px);
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    border-radius: 20px;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
-    z-index: 20;
+    
+    background: rgba(255, 255, 255, 0.18);
+    backdrop-filter: blur(20px) saturate(180%);
+    -webkit-backdrop-filter: blur(20px) saturate(180%);
+    border-radius: 24px;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    box-shadow: 0 12px 36px rgba(0, 0, 0, 0.4),
+                inset 0 1px 0 rgba(255, 255, 255, 0.4);
+    z-index: 1000;
 }
 
 .dock-icon {
-    font-size: 1.8rem;
-    padding: 8px;
+    width: 50px;            
+    height: 50px;
+    min-width: 50px;
+    min-height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    background: transparent;  
+    border: none;
     border-radius: 12px;
     cursor: pointer;
-    transition: transform 0.2s ease, color 0.2s ease;
+    transition: transform 0.2s cubic-bezier(0.2, 0.8, 0.2, 1);
     user-select: none;
+    font-size: 2rem;       
+}
+
+#calc-icon {
+    background: transparent;
+    border: none;
+    box-shadow: none;
 }
 
 .dock-icon:hover {
-    transform: translateY(-8px) scale(1.15);
-    background-color: rgba(255, 255, 255, 0.2);
+    transform: translateY(-6px) scale(1.18);
+}
+
+.dock-icon img {
+    width: 38px;                  
+    height: 38px;
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+    display: block;
+    align-self: center;
 }
 
 .window {
@@ -203,4 +234,57 @@ display: none;
 }
 .calc-buttons .equal-btn:hover {
     background: #e67e22;
+}
+
+#paint-app {
+    width: 600px;
+    height: 450px;
+    display: flex;
+    flex-direction: column;
+}
+
+.paint-toolbar {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 8px 12px;
+    background: #f0f0f0;
+    border-bottom: 1px solid #ccc;
+    user-select: none;
+    font-family: sans-serif;
+    font-size: 14px;
+}
+
+.paint-toolbar input[type="color"] {
+    border: none;
+    width: 28px;
+    height: 28px;
+    cursor: pointer;
+    background: transparent;
+}
+
+.paint-toolbar button {
+    padding: 4px 12px;
+    background: #fff;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.paint-toolbar button:hover {
+    background: #e5e5e5;
+}
+
+.paint-canvas-container {
+    flex: 1;
+    background: #ffffff;
+    position: relative;
+    overflow: hidden;
+    cursor: crosshair;
+}
+
+#paint-canvas {
+    display: block;
+    width: 100%;
+    height: 100%;
 }
