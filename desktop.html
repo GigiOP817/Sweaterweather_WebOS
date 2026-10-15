@@ -84,12 +84,63 @@
     </div>
 </div>
 
+<div id="timer-app" class="window"style="display: none;">
+    <div class="window-header">
+        <span class="window-title">Clock & Utilities</span>
+        <button class="close-btn" onclick="closeApp('timer-app')">×</button>
+    </div>
+</div>
+
+<div class="clock-tabs">
+    <button class="tab-btn active" onclick="switchClockTab('tab-clock')">Clock</button>
+    <button class="tab-btn" onclick="switchClockTab('tab-alarm')">Alarm</button>
+    <button class="tab-btn" onclick="switchClockTab('tab-stopwatch')">Stopwatch</button>
+    <button class="tab-btn" onclick="switchClockTab('tab-timer')">Timer</button>
+</div>
+
+<div class="window-content clock-body">
+    <div id="tab-clock" class="clock-tab-content active">
+        <div class="digital-display" id="tab-clock-display">00:00:00</div>
+        <p id="tab-clock-date">--</p>
+    </div>
+
+    <div id="tab-alarm" class="clock-tab-content">
+        <div class="alarm-controls">
+            <input type="time" id="alarm-time">
+            <button id="set-alarm-btn" onclick="setAlarm()">Set Alarm</button>
+        </div>
+        <div id="alarm-status">No alarm set</div>
+    </div>
+
+<div id="tab-stopwatch" class="clock-tab-content">
+<div class="digital-display" id="stopwatch-display">00:00:00</div>  
+<div class="clock-controls">
+    <button id="start-btn" onclick="startTimer()">Start</button>
+    <button id="stop-btn" onclick="pauseTimer()">Stop</button>
+    <button id="reset-btn" onclick="resetTimer()">Reset</button>
+</div>      
+</div>
+
+<div id="tab-timer" class="clock-tab-content">
+    <div class="digital-display" id="timer-countdown-display">5:00</div>
+    <div class="timer-inputs">
+        <input type="number" id="timer-hours" placeholder="Hours" min="0" max="23">
+        <input type="number" id="timer-minutes" placeholder="Minutes" min="0" max="59">
+        <input type="number" id="timer-seconds" placeholder="Seconds" min="0" max="59">
+    </div>
+    <div class="clock-controls">
+        <button onclick="startCDTimer()">Start</button>
+        <button onclick="pauseCDTimer()">Pause</button>
+        <button onclick="resetCDTimer()">Reset</button>
+    </div>
+</div>
+
         <nav class="dock">
 <div class="dock-icon" onclick="document.getElementById('paint-app').style.display='flex'">
     🎨
 </div>            <div class="dock-icon" title="Calculator" onclick="openApp('app-calculator')">🧮</div>
             <div class="dock-icon" title="Notepad" onclick="openApp('app-notepad')">📝</div>
-            <div class="dock-icon" title="Timer" onclick="openApp('app-timer')">⏱️</div>
+            <div class="dock-icon" title="Stopwatch" onclick="openApp('timer-app')">⏱️</div>
             <div class="dock-icon" title="Fall Bucket List" onclick="openApp('app-bucketlist')">🍁</div>
             <div class="dock-icon" title="Gallery" onclick="openApp('app-gallery')">🖼️</div>
             <div class="dock-icon" title="Lo-Fi Player" onclick="openApp('app-lofi')">🎧</div>
@@ -222,6 +273,42 @@ function closeWindow(id) {
         win.style.display = 'none';
     }
 }
-    </script>
+
+let timerInterval = null;
+let elapsedTime = 0;
+
+function updateTimerDisplay() {
+    const totalMS = elapsedTime;
+    const minutes = Math.floor(totalMS / 60000);
+    const seconds = Math.floor((totalMS % 60000) / 1000);
+    const milliseconds = Math.floor((totalMS % 1000) / 100);
+
+    const formattedMins = String(minutes).padStart(2, '0');
+    const formattedSecs = String(seconds).padStart(2, '0');
+    const formattedMS = String(milliseconds).padStart(2, '0');
+
+    document.getElementById('timer-display').textContent = `${formattedMins}:${formattedSecs}:${formattedMS}`;
+}
+
+function startTimer() {
+    if (timerInterval) return;
+    const startTime = Date.now() - elapsedTime;
+    timerInterval = setInterval(() => {
+        elapsedTime = Date.now() - startTime;
+        updateTimerDisplay();
+    }, 10);
+}
+
+function pauseTimer() {
+    clearInterval(timerInterval);
+    timerInterval = null;
+}
+
+function resetTimer() {
+    pauseTimer();
+    elapsedTime = 0;
+    updateTimerDisplay();
+}
+</script>
 </body>
 </html>

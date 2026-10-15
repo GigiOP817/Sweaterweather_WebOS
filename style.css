@@ -3,6 +3,27 @@
     padding: 0;
     box-sizing: border-box;
 }
+body{
+    background-image: url("Screenshot 2026-09-19 211139.png");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+}
+h2{
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color: rgb(255, 230, 216);
+    text-align: center;
+    font-size: 3rem;
+    transform: translateY(200px);
+}
+
+p{
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color: white;
+    text-align: center;
+    margin-top: 270px;
+}
 
 .desktop {
     position: relative;
@@ -60,7 +81,7 @@
     flex-direction: column;
     justify-content: flex-start;
     align-items: center;
-    padding-top: 50px;
+    padding-top: 10px;
     color: white;
     text-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
     user-select: none;
@@ -287,4 +308,95 @@ display: none;
     display: block;
     width: 100%;
     height: 100%;
+}
+
+#timer-app {
+    width: 360px;
+    height: 300px;
+}
+
+.clock-tabs {
+    display: flex;
+    background: rgba(0, 0, 0, 0.2);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.tab-btn {
+    flex: 1;
+    padding: 8px 0;
+    background: transparent;
+    border: none;
+    color: rgba(255, 255, 255, 0.7);
+    cursor: pointer;
+    font-size: 0.85rem;
+    transition: all 0.2s;
+}
+
+.tab-btn:hover {
+    color: #fff;
+}
+
+.tab-btn.active {
+    color: #fff;
+    border-bottom: 2px solid #ffaa44;
+    background: rgba(255, 255, 255, 0.05);
+}
+
+.clock-body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 15px;
+}
+
+.clock-tab-content {
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+    width: 100%;
+}
+
+.clock-tab-content.active {
+    display: flex;
+}
+
+.digital-display {
+    font-size: 2.2rem;
+    font-family: monospace;
+    font-weight: bold;
+    color: #fff;
+    text-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
+}
+
+.clock-controls, .alarm-controls {
+    display: flex;
+    gap: 8px;
+}
+
+.clock-tab-content button {
+    padding: 6px 14px;
+    border-radius: 6px;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    background: rgba(255, 255, 255, 0.1);
+    color: white;
+    cursor: pointer;
+}
+
+.clock-tab-content button:hover {
+    background: rgba(255, 255, 255, 0.25);
+}
+
+.clock-tab-content input {
+    padding: 5px;
+    border-radius: 4px;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    background: rgba(0, 0, 0, 0.3);
+    color: white;
+    text-align: center;
+}
+
+.timer-inputs input {
+    width: 60px;
 }
