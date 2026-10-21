@@ -310,93 +310,40 @@ display: none;
     height: 100%;
 }
 
-#timer-app {
-    width: 360px;
-    height: 300px;
+.dock-container {
+    position: fixed;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 9999;
 }
 
-.clock-tabs {
+.dock {
     display: flex;
-    background: rgba(0, 0, 0, 0.2);
-    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    flex-direction: row; 
+    align-items: center;
+    gap: 12px;
+    padding: 8px 18px;
+    background: rgba(178, 101, 0, 0.493);
+    border-radius: 20px;
+    border: 1px solid rgb(255, 142, 61);
+    box-shadow: 0 8px 32px rgb(75, 40, 0);
 }
 
-.tab-btn {
-    flex: 1;
-    padding: 8px 0;
-    background: transparent;
-    border: none;
-    color: rgba(255, 255, 255, 0.7);
-    cursor: pointer;
-    font-size: 0.85rem;
-    transition: all 0.2s;
-}
-
-.tab-btn:hover {
-    color: #fff;
-}
-
-.tab-btn.active {
-    color: #fff;
-    border-bottom: 2px solid #ffaa44;
-    background: rgba(255, 255, 255, 0.05);
-}
-
-.clock-body {
+.dock-icon {
+    font-size: 22px;
+    width: 40px;
+    height: 40px;
     display: flex;
-    flex-direction: column;
     align-items: center;
     justify-content: center;
-    padding: 15px;
-}
-
-.clock-tab-content {
-    display: none;
-    flex-direction: column;
-    align-items: center;
-    gap: 15px;
-    width: 100%;
-}
-
-.clock-tab-content.active {
-    display: flex;
-}
-
-.digital-display {
-    font-size: 2.2rem;
-    font-family: monospace;
-    font-weight: bold;
-    color: #fff;
-    text-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
-}
-
-.clock-controls, .alarm-controls {
-    display: flex;
-    gap: 8px;
-}
-
-.clock-tab-content button {
-    padding: 6px 14px;
-    border-radius: 6px;
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    background: rgba(255, 255, 255, 0.1);
-    color: white;
     cursor: pointer;
+    border-radius: 10px;
+    transition: transform 0.2s ease, background 0.2s ease;
+    user-select: none;
 }
 
-.clock-tab-content button:hover {
-    background: rgba(255, 255, 255, 0.25);
-}
-
-.clock-tab-content input {
-    padding: 5px;
-    border-radius: 4px;
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    background: rgba(0, 0, 0, 0.3);
-    color: white;
-    text-align: center;
-}
-
-.timer-inputs input {
-    width: 60px;
+.dock-icon:hover {
+    transform: scale(1.2) translateY(-4px);
+    background: rgba(128, 117, 22, 0.2);
 }
