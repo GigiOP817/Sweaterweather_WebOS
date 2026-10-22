@@ -84,6 +84,79 @@
     </div>
 </div>
 
+<div id="app-bucketlist" class="app-window"> 
+<div class="window-header">
+    <span>🍁 Fall Bucket List</span>
+    <button class="close-btn" onclick="closeApp('app-bucketlist')">×</button>
+    <div class="dock-icon" title="Fall Bucket List" onclick="openApp('app-bucketlist')">🍁</div>
+
+</div>
+    
+    <div class="bucketlist-content">
+        <ul class="bucket-list">
+            <li>
+                <label>
+                    <input type="checkbox">
+                    <span>🎃 Visit a pumpkin patch</span>
+                </label>
+            </li>
+            <li>
+                <label>
+                    <input type="checkbox">
+                    <span>🍎 Drink hot apple cider</span>
+                </label>
+            </li>
+            <li>
+                <label>
+                    <input type="checkbox">
+                    <span>🍂 Go on a fall hike</span>
+                </label>
+            </li>
+            <li>
+                <label>
+                    <input type="checkbox">
+                    <span>🎃 Carve a pumpkin</span>
+                </label>
+            </li>
+            <li>
+                <label>
+                    <input type="checkbox">
+                    <span>🎬 Watch a fall movie</span>
+                </label>
+            </li>
+            <li>
+                <label>
+                    <input type="checkbox">
+                    <span>🥧 Bake a pie</span>
+                </label>
+            </li>
+            <li>
+                <label>
+                    <input type="checkbox">
+                    <span>📖 Read a book</span>
+                </label>
+            </li>
+            <li>
+                <label>
+                    <input type="checkbox">
+                    <span>🍁 Collect colorful leaves</span>
+                </label>
+            </li>
+            <li>
+                <label>
+                    <input type="checkbox">
+                    <span>🏕️ Autumn Sleepover</span>
+                </label>
+            </li>
+            <li>
+                <label>
+                    <input type="checkbox">
+                    <span>👻 Halloween Party</span>
+                </label>
+            </li>
+        </ul>
+    </div>
+</div>
 
 <div class="dock-container">
     <nav class="dock">
@@ -91,8 +164,8 @@
         <div class="dock-icon" title="Calculator" onclick="openApp('app-calculator')">🧮</div>
         <div class="dock-icon" title="Notepad" onclick="openApp('app-notepad')">📝</div>
         <div class="dock-icon" title="Stopwatch" onclick="openApp('timer-app')">🕰️</div>
-        <div class="dock-icon" title="Fall Bucket List" onclick="openApp('app-bucketlist')">🍂</div>
-        <div class="dock-icon" title="Gallery" onclick="openApp('app-gallery')">🖼️</div>
+<div class="dock-icon" title="Fall Bucket List" onclick="openApp('app-bucketlist')">🍁</div>
+ <div class="dock-icon" title="Gallery" onclick="openApp('app-gallery')">🖼️</div>
         <div class="dock-icon" title="Lo-Fi Player" onclick="openApp('app-lofi')">🎺</div>
     </nav>
 </div>
@@ -287,6 +360,54 @@ function resetTimer() {
     minutesInput.value = "";
     secondsInput.value = "";
 }
+
+function updateBucketProgress(){
+    const checkboxes = document.querySelectorAll('#bucketlist-items input[type="checkbox"]');
+    if (checkboxes.length === 0) return;
+
+    const checkedCount = Array.from(checkboxes).filter(cb => cb.checked).length;
+    const percentage = Math.round((checkedCount / checkboxes.length) * 100);
+
+    const progressBar = document.getElementById('bucketlist-progress');
+    const progressText = document.getElementById('bucketlist-percentage');
+
+    if(progressBar) progressBar.style.width = percentage + '%';
+    if(progressText) progressText.textContent = `${percentage}% completed`;
+
+    function addBucketItem(){
+        const input = document.getElementById('new-bucket-item');
+        const text = input.value.trim();
+
+        if(!text) return;
+
+        const ul = document.getElementById('bucketlist-items');
+        const li = document.createElement('li');
+
+        li.innerHTML =
+        `<label>
+            <input type="checkbox" onchange="updateBucketProgress()">
+            <span>🍂${text}</span>
+        </label>`;
+
+        ul.appendChild(li);
+        input.value = '';
+        updateBucketProgress();
+    }
+}
+function openApp(appId) {
+    const appWindow = document.getElementById(appId);
+    if (appWindow) {
+        appWindow.style.display = 'block';
+    }
+}
+
+function closeApp(appId) {
+    const appWindow = document.getElementById(appId);
+    if (appWindow) {
+        appWindow.style.display = 'none';
+    }
+}
+
 </script>
 </body>
 </html>
