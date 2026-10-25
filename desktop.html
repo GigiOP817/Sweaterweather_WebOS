@@ -1,3 +1,4 @@
+<link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400..700&display=swap" rel="stylesheet"> 
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -84,79 +85,45 @@
     </div>
 </div>
 
-<div id="app-bucketlist" class="app-window"> 
-<div class="window-header">
-    <span>🍁 Fall Bucket List</span>
-    <button class="close-btn" onclick="closeApp('app-bucketlist')">×</button>
-    <div class="dock-icon" title="Fall Bucket List" onclick="openApp('app-bucketlist')">🍁</div>
-
+<div id="app-music" class="app-window" style="display: none;">
+    <div class="window-header">
+        <span>🍂🎺Autumn Playlist</span>
+        <button class="close-btn" onclick="closeApp('app-music')">X</button>
+    </div>
+    <div class="music-content">
+           <iframe data-testid="embed-iframe" style="border-radius:0px" src="https://open.spotify.com/embed/playlist/4ANYvxgZt95b26WWSC5wUw?utm_source=generator&theme=0&si=627780cfcac94f06" width="100%" height="100%" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>" 
+    </div>
 </div>
-    
+
+<div id="app-bucketlist" class="app-window" style="display: none;">
+    <div class="window-header">
+        <span>🍂 Fall Bucket List</span>
+        <button class="close-btn" onclick="closeApp('app-bucketlist')">X</button>
+    </div>
+
+<div id="app-gallery" class="app-window" style="display: none;">
+    <div class="window-header">
+        <span>🖼️ Autumn Gallery</span>
+        <button class="close-btn" onclick="closeApp('app-gallery')">X</button>
+    </div>
+    <div class="gallery-content-fullscreen">
+
     <div class="bucketlist-content">
         <ul class="bucket-list">
-            <li>
-                <label>
-                    <input type="checkbox">
-                    <span>🎃 Visit a pumpkin patch</span>
-                </label>
-            </li>
-            <li>
-                <label>
-                    <input type="checkbox">
-                    <span>🍎 Drink hot apple cider</span>
-                </label>
-            </li>
-            <li>
-                <label>
-                    <input type="checkbox">
-                    <span>🍂 Go on a fall hike</span>
-                </label>
-            </li>
-            <li>
-                <label>
-                    <input type="checkbox">
-                    <span>🎃 Carve a pumpkin</span>
-                </label>
-            </li>
-            <li>
-                <label>
-                    <input type="checkbox">
-                    <span>🎬 Watch a fall movie</span>
-                </label>
-            </li>
-            <li>
-                <label>
-                    <input type="checkbox">
-                    <span>🥧 Bake a pie</span>
-                </label>
-            </li>
-            <li>
-                <label>
-                    <input type="checkbox">
-                    <span>📖 Read a book</span>
-                </label>
-            </li>
-            <li>
-                <label>
-                    <input type="checkbox">
-                    <span>🍁 Collect colorful leaves</span>
-                </label>
-            </li>
-            <li>
-                <label>
-                    <input type="checkbox">
-                    <span>🏕️ Autumn Sleepover</span>
-                </label>
-            </li>
-            <li>
-                <label>
-                    <input type="checkbox">
-                    <span>👻 Halloween Party</span>
-                </label>
-            </li>
+            <li><label><input type="checkbox"> 🎃 Visit a pumpkin patch</label></li>
+            <li><label><input type="checkbox"> 📙 Read a book</label></li>
+            <li><label><input type="checkbox"> 🥧 Bake</label></li>
+            <li><label><input type="checkbox"> 👻 Halloween Party</label></li>
+            <li><label><input type="checkbox"> 🍂 Go for a nature walk</label></li>
+            <li><label><input type="checkbox"> 🐦‍🔥 Go Birdwatching</label></li>
+            <li><label><input type="checkbox"> 🏕️ Go Camping</label></li>
+            <li><label><input type="checkbox"> ☕ Drink hot chocolate</label></li>
+            <li><label><input type="checkbox"> 🎃 Carve a pumpkin</label></li>
+            <li><label><input type="checkbox"> 🎥🍂 Watch a movie</label></li>
         </ul>
     </div>
 </div>
+
 
 <div class="dock-container">
     <nav class="dock">
@@ -164,9 +131,9 @@
         <div class="dock-icon" title="Calculator" onclick="openApp('app-calculator')">🧮</div>
         <div class="dock-icon" title="Notepad" onclick="openApp('app-notepad')">📝</div>
         <div class="dock-icon" title="Stopwatch" onclick="openApp('timer-app')">🕰️</div>
-<div class="dock-icon" title="Fall Bucket List" onclick="openApp('app-bucketlist')">🍁</div>
- <div class="dock-icon" title="Gallery" onclick="openApp('app-gallery')">🖼️</div>
-        <div class="dock-icon" title="Lo-Fi Player" onclick="openApp('app-lofi')">🎺</div>
+        <div class="dock-icon" title="Bucket List" onclick="openApp('app-bucketlist')">🍂</div>
+        <div class="dock-icon" title="Gallery" onclick="openApp('app-gallery')">🖼️</div>
+        <div class="dock-icon" title="Music Player" onclick="openApp('app-music')">🎺</div>
     </nav>
 </div>
 
@@ -361,51 +328,79 @@ function resetTimer() {
     secondsInput.value = "";
 }
 
-function updateBucketProgress(){
-    const checkboxes = document.querySelectorAll('#bucketlist-items input[type="checkbox"]');
-    if (checkboxes.length === 0) return;
-
-    const checkedCount = Array.from(checkboxes).filter(cb => cb.checked).length;
-    const percentage = Math.round((checkedCount / checkboxes.length) * 100);
-
-    const progressBar = document.getElementById('bucketlist-progress');
-    const progressText = document.getElementById('bucketlist-percentage');
-
-    if(progressBar) progressBar.style.width = percentage + '%';
-    if(progressText) progressText.textContent = `${percentage}% completed`;
-
-    function addBucketItem(){
-        const input = document.getElementById('new-bucket-item');
-        const text = input.value.trim();
-
-        if(!text) return;
-
-        const ul = document.getElementById('bucketlist-items');
-        const li = document.createElement('li');
-
-        li.innerHTML =
-        `<label>
-            <input type="checkbox" onchange="updateBucketProgress()">
-            <span>🍂${text}</span>
-        </label>`;
-
-        ul.appendChild(li);
-        input.value = '';
-        updateBucketProgress();
-    }
-}
 function openApp(appId) {
-    const appWindow = document.getElementById(appId);
-    if (appWindow) {
-        appWindow.style.display = 'block';
+    const app = document.getElementById(appId);
+    if (app) {
+        app.style.display = 'block';
     }
 }
 
 function closeApp(appId) {
-    const appWindow = document.getElementById(appId);
-    if (appWindow) {
-        appWindow.style.display = 'none';
+    const app = document.getElementById(appId);
+    if (app) {
+        app.style.display = 'none';
     }
+}
+
+function openApp(appId) {
+    const app = document.getElementById(appId);
+    if (app) {
+        app.style.display = 'block';
+    }
+}
+
+function closeApp(appId) {
+    const app = document.getElementById(appId);
+    if (app) {
+        app.style.display = 'none';
+    }
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+    makeWindowsDraggable();
+});
+
+function makeWindowsDraggable() {
+    const headers = document.querySelectorAll('.window-header');
+
+    headers.forEach(header => {
+        header.addEventListener('mousedown', dragMouseDown);
+    });
+}
+
+function dragMouseDown(e) {
+    if (e.target.classList.contains('close-btn')) return;
+
+    e.preventDefault();
+    
+    const appWindow = e.currentTarget.parentElement;
+
+    let posX = e.clientX;
+    let posY = e.clientY;
+
+    document.querySelectorAll('.app-window').forEach(win => win.style.zIndex = '1000');
+    appWindow.style.zIndex = '10000';
+
+    function elementDrag(e) {
+        e.preventDefault();
+        
+        const dx = posX - e.clientX;
+        const dy = posY - e.clientY;
+        posX = e.clientX;
+        posY = e.clientY;
+
+        appWindow.style.top = (appWindow.offsetTop - dy) + "px";
+        appWindow.style.left = (appWindow.offsetLeft - dx) + "px";
+        appWindow.style.transform = "none"; 
+    }
+
+    function closeDragElement() {
+        document.removeEventListener('mousemove', elementDrag);
+        document.removeEventListener('mouseup', closeDragElement);
+    }
+
+    document.addEventListener('mousemove', elementDrag);
+    document.addEventListener('mouseup', closeDragElement);
 }
 
 </script>

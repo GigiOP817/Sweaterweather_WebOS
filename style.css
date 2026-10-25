@@ -1,4 +1,4 @@
-* {
+*{
     margin: 0;
     padding: 0;
     box-sizing: border-box;
@@ -350,24 +350,22 @@ display: none;
 }
 
 #app-bucketlist {
-    position: fixed !important;
-    top: 50% !important;
-    left: 50% !important;
-    transform: translate(-50%, -50%) !important;
-    
-    width: 340px !important;
-    background: rgba(30, 20, 15, 0.9) !important;
-    backdrop-filter: blur(14px) !important;
-    -webkit-backdrop-filter: blur(14px) !important;
-    border-radius: 14px !important;
-    border: 1px solid rgba(255, 255, 255, 0.2) !important;
-    box-shadow: 0 16px 40px rgba(0, 0, 0, 0.6) !important;
-    color: white !important;
-    overflow: hidden !important;
-    font-family: system-ui, -apple-system, sans-serif !important;
-    
-    display: none !important; 
-    z-index: 10000 !important;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 320px;
+    max-height: 420px;
+    background: rgba(30, 20, 15, 0.9);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border-radius: 14px;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    box-shadow: 0 16px 40px rgba(0, 0, 0, 0.6);
+    color: white;
+    overflow: hidden;
+    font-family: Beth Ellen, 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    z-index: 10000;
 }
 
 #app-bucketlist .window-header {
@@ -381,57 +379,110 @@ display: none;
 }
 
 #app-bucketlist .close-btn {
-    background: none;
+    background:none;
     border: none;
     color: white;
     font-size: 16px;
     cursor: pointer;
     opacity: 0.8;
-    transition: opacity 0.2s;
 }
 
-#app-bucketlist .close-btn:hover {
-    opacity: 1;
-}
-
-.bucketlist-content {
+#app-bucketlist .bucketlist-content {
     padding: 14px;
-    max-height: 280px;
+    max-height: 340px;
     overflow-y: auto;
 }
 
-.bucket-list {
-    list-style: none !important;
-    padding: 0 !important;
-    margin: 0 !important;
+#app-bucketlist .bucket-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
     display: flex;
     flex-direction: column;
     gap: 8px;
 }
 
-.bucket-list li label {
+#app-bucketlist .bucket-list li label{
     display: flex;
     align-items: center;
     gap: 10px;
-    background: rgba(255, 255, 255, 0.06);
+    background: rgba(255, 255, 255, 0.08);
     padding: 8px 12px;
     border-radius: 8px;
     cursor: pointer;
-    transition: background 0.2s ease;
 }
 
-.bucket-list li label:hover {
-    background: rgba(255, 255, 255, 0.12);
-}
-
-.bucket-list input[type="checkbox"] {
+#app-bucketlist .bucket-list input[type="checkbox"] {
     accent-color: #ff7e5f;
     width: 16px;
     height: 16px;
     cursor: pointer;
 }
 
-.bucket-list input[type="checkbox"]:checked + span {
+#app-bucketlist .bucket-list input[type="checkbox"]:checked + span {
     text-decoration: line-through;
     opacity: 0.5;
+}
+
+#app-music {
+    position: fixed;
+    top:0;
+    left:0;
+    width: 100vw;
+    height: 100vh;
+    transform:none;
+    background: rgba(120, 55, 2, 0.95);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border-radius: 0;
+    border: none;
+    box-shadow: none;
+    color: white;
+    z-index: 10000;
+    display: flex;
+    flex-direction: column;
+}
+
+#app-music .window-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 16px 24px;
+    background: rgba(255, 255, 255, 0.08);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    font-weight: bold;
+    font-size: 18px;
+}
+
+#app-music .music-content {
+    flex:1;
+    width: 100%;
+    height:calc(100vh - 60px);
+    padding: 0;
+    overflow: hidden;
+}
+
+#app-music .close-btn {
+    background: none;
+    border: none;
+    color: white;
+    font-size: 20px;
+    cursor: pointer;
+    opacity: 0.8;
+}
+
+#app-music .close-btn:hover {
+    opacity: 1;
+}
+
+.app-window {
+    position: absolute;
+    top: 100px;    
+    left: 100px;
+    z-index: 1000;
+}
+
+.window-header {
+    cursor: move;     
+    user-select: none;  
 }
