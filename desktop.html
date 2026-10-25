@@ -1,4 +1,4 @@
-<link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400..700&display=swap" rel="stylesheet"> 
+<link href="https://fonts.googleapis.com/css2?family=Old+Standard+TT:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -101,13 +101,6 @@
         <button class="close-btn" onclick="closeApp('app-bucketlist')">X</button>
     </div>
 
-<div id="app-gallery" class="app-window" style="display: none;">
-    <div class="window-header">
-        <span>🖼️ Autumn Gallery</span>
-        <button class="close-btn" onclick="closeApp('app-gallery')">X</button>
-    </div>
-    <div class="gallery-content-fullscreen">
-
     <div class="bucketlist-content">
         <ul class="bucket-list">
             <li><label><input type="checkbox"> 🎃 Visit a pumpkin patch</label></li>
@@ -124,16 +117,79 @@
     </div>
 </div>
 
+<div id="app-gallery" class="app-window fullscreen-app" style="display: none;">
+    <div class="gallery-topbar">
+        <div class="gallery-title">
+            <span>🍂📷 Autumn Gallery</span>
+            <small id="gallery-counter">1 / 5</small>
+        </div>
+        <button class="gallery-close-btn" onclick="closeApp('app-gallery')" title="Close Gallery">✕</button>
+    </div>
+
+    <div class="gallery-stage">
+        <div class="gallery-frame">
+            <div class="gallery-image-wrapper">
+                <img id="gallery-display-img" src="" alt="Autumn Image">
+            </div>
+            
+            <div class="gallery-info-bar">
+                <div class="gallery-details">
+                    <h2 id="gallery-img-title">Autumn Aesthetic</h2>
+                </div>
+                <button class="set-wallpaper-btn" onclick="applyCurrentWallpaper()">
+                     Set as Wallpaper
+                </button>
+            </div>
+        </div>
+
+        <button class="slide-nav-btn prev-btn" onclick="prevGalleryImage()">❮</button>
+        <button class="slide-nav-btn next-btn" onclick="nextGalleryImage()">❯</button>
+    </div>
+</div>
+
+<div id="app-timer" class="app-window" style="display: none;">
+    <div class="window-header">
+        <span>🍁 Timer</span>
+        <button class="close-btn" onclick="closeApp('app-timer')" title="Close">✕</button>
+    </div>
+
+    <div class="timer-content">
+        <div class="timer-display" id="timer-display">00:05:00</div>
+
+        <div class="timer-inputs">
+            <div class="input-group">
+                <input type="number" id="timer-hours" min="0" max="23" value="0" placeholder="00" oninput="updateDisplayFromInputs()">
+                <label>HRS</label>
+            </div>
+            <span>:</span>
+            <div class="input-group">
+                <input type="number" id="timer-minutes" min="0" max="59" value="5" placeholder="05" oninput="updateDisplayFromInputs()">
+                <label>MIN</label>
+            </div>
+            <span>:</span>
+            <div class="input-group">
+                <input type="number" id="timer-seconds" min="0" max="59" value="0" placeholder="00" oninput="updateDisplayFromInputs()">
+                <label>SEC</label>
+            </div>
+        </div>
+
+        <div class="timer-controls">
+            <button class="timer-btn primary" id="timer-start-btn" onclick="toggleTimer()">Start</button>
+            <button class="timer-btn" onclick="resetTimer()">Reset</button>
+        </div>
+    </div>
+</div>
+
 
 <div class="dock-container">
     <nav class="dock">
         <div class="dock-icon" title="Paint" onclick="document.getElementById('paint-app').style.display='flex'">🖌️</div>
         <div class="dock-icon" title="Calculator" onclick="openApp('app-calculator')">🧮</div>
         <div class="dock-icon" title="Notepad" onclick="openApp('app-notepad')">📝</div>
-        <div class="dock-icon" title="Stopwatch" onclick="openApp('timer-app')">🕰️</div>
+        <div class="dock-icon" title="Timer" onclick="openApp('app-timer')">🕰️</div>
         <div class="dock-icon" title="Bucket List" onclick="openApp('app-bucketlist')">🍂</div>
-        <div class="dock-icon" title="Gallery" onclick="openApp('app-gallery')">🖼️</div>
         <div class="dock-icon" title="Music Player" onclick="openApp('app-music')">🎺</div>
+        <div class="dock-icon" title="Gallery" onclick="openApp('app-gallery'); updateGalleryDisplay();">🖼️</div>
     </nav>
 </div>
 
@@ -264,69 +320,7 @@ function closeWindow(id) {
     }
 }
 
-let timerInterval = null;
-let totalTimeInSeconds = 0;
-let remainingTimeInSeconds = 0;
 
-    const minutesInput = document.getElementById('timer-minutes');
-    const secondsInput = document.getElementById('timer-seconds');
-    const timerDisplay = document.getElementById('timer-display');
-
-function formatTime(totalSecs){
-    const mins = Math.floor(totalSecs / 60);
-    const secs = totalSecs % 60;
-    const formattedMins = String(mins).padStart(2, '0');
-    const formattedSecs = String(secs).padStart(2, '0');
-    return `${String(mins).padStart(2, '0')}:${String(secs).padStart(2, '0')}`;
-}
-
-function updateTimerDisplay() {
-    timerDisplay.textContent = formatTime(remainingTimeInSeconds);
-}
-
-function startTimer() {
-    if (timerInterval) return;
-
-    totalTimeInSeconds = parseInt(minutesInput.value) * 60 + parseInt(secondsInput.value);
-    remainingTimeInSeconds = totalTimeInSeconds;
-
-    if (remainingTimeInSeconds === 0) {
-        const mins = parseInt(minutesInput.value) || 0;
-        const secs = parseInt(secondsInput.value) || 0;
-        timerDisplay.textContent = formatTime((mins * 60) + secs);
-        remainingTimeInSeconds = totalTimeInSeconds;
-    }
-
-    if (remainingTimeInSeconds <= 0) {
-        alert("Please set a valid time.");
-        return;
-    }
-
-    updateTimerDisplay();
-
-    timerInterval = setInterval(() => {
-        remainingTimeInSeconds--;
-        updateTimerDisplay();
-
-        if (remainingTimeInSeconds <= 0) {
-            pauseTimer();
-            alert("Time's up!");
-        }
-    }, 1000);
-}
-
-function pauseTimer() {
-    clearInterval(timerInterval);
-    timerInterval = null;
-}
-
-function resetTimer() {
-    pauseTimer();
-    remainingTimeInSeconds = 0;
-    timerDisplay.textContent = "00:00";
-    minutesInput.value = "";
-    secondsInput.value = "";
-}
 
 function openApp(appId) {
     const app = document.getElementById(appId);
@@ -401,6 +395,167 @@ function dragMouseDown(e) {
 
     document.addEventListener('mousemove', elementDrag);
     document.addEventListener('mouseup', closeDragElement);
+}
+
+const autumnGalleryData = [
+    {
+        url: "https://i.pinimg.com/736x/19/c5/1d/19c51d8570e6c78b02127dc6dc32aaa5.jpg",
+        title: "Autumn Leaves"
+    },
+    {
+        url: "https://i.pinimg.com/1200x/40/11/e1/4011e1c7eb12543955bf9c6a688853d8.jpg",
+        title: "Snoopy"
+    },
+    {
+        url: "https://i.pinimg.com/1200x/91/45/0b/91450b73ebfc6354f9e64cbf07d2b31b.jpg",
+        title: "Forest"
+    },
+    {
+        url: "https://i.pinimg.com/1200x/72/61/35/72613517616ef6649ccb1848c252a270.jpg",
+        title: "Spooky"
+    },
+    {
+        url: "https://i.pinimg.com/1200x/3e/dc/61/3edc61b8b089ea7087129da120808c3b.jpg",
+        title: "Nature"
+    }
+];
+
+let currentGalleryIndex = 0;
+
+function updateGalleryDisplay() {
+    const item = autumnGalleryData[currentGalleryIndex];
+    const imgElement = document.getElementById('gallery-display-img');
+    const titleElement = document.getElementById('gallery-img-title');
+    const counterElement = document.getElementById('gallery-counter');
+
+    if (imgElement) imgElement.src = item.url;
+    if (titleElement) titleElement.textContent = item.title;
+    if (counterElement) counterElement.textContent = `${currentGalleryIndex + 1} / ${autumnGalleryData.length}`;
+}
+
+function nextGalleryImage() {
+    currentGalleryIndex = (currentGalleryIndex + 1) % autumnGalleryData.length;
+    updateGalleryDisplay();
+}
+
+function prevGalleryImage() {
+    currentGalleryIndex = (currentGalleryIndex - 1 + autumnGalleryData.length) % autumnGalleryData.length;
+    updateGalleryDisplay();
+}
+
+function applyCurrentWallpaper() {
+    const item = autumnGalleryData[currentGalleryIndex];
+    const desktop = document.querySelector('.desktop');
+    
+    if (desktop) {
+        desktop.style.backgroundImage = `url('${item.url}')`;
+        desktop.style.backgroundSize = 'cover';
+        desktop.style.backgroundPosition = 'center';
+    }
+}
+
+function openGalleryApp() {
+    const galleryWin = document.getElementById('app-gallery');
+    if (galleryWin) {
+        galleryWin.style.display = 'flex';
+}
+}
+
+let timerInterval = null;
+let totalSeconds = 300; 
+let isTimerRunning = false;
+
+function formatTime(seconds) {
+    const hrs = Math.floor(seconds / 3600);
+    const mins = Math.floor((seconds % 3600) / 60);
+    const secs = seconds % 60;
+
+    return String(hrs).padStart(2, '0') + ':' +
+           String(mins).padStart(2, '0') + ':' +
+           String(secs).padStart(2, '0');
+}
+
+
+function updateDisplayFromInputs() {
+    if (isTimerRunning) return; 
+
+    const h = parseInt(document.getElementById('timer-hours').value, 10) || 0;
+    const m = parseInt(document.getElementById('timer-minutes').value, 10) || 0;
+    const s = parseInt(document.getElementById('timer-seconds').value, 10) || 0;
+
+    totalSeconds = (h * 3600) + (m * 60) + s;
+    const displayEl = document.getElementById('timer-display');
+    if (displayEl) {
+        displayEl.textContent = formatTime(totalSeconds);
+    }
+}
+
+function toggleTimer() {
+    const startBtn = document.getElementById('timer-start-btn');
+    const displayEl = document.getElementById('timer-display');
+
+    if (isTimerRunning) {
+        clearInterval(timerInterval);
+        isTimerRunning = false;
+        if (startBtn) {
+            startBtn.textContent = 'Start';
+            startBtn.style.background = '#d35400';
+        }
+    } else {
+        if (totalSeconds <= 0) {
+            updateDisplayFromInputs();
+        }
+
+        if (totalSeconds <= 0) return; 
+
+        isTimerRunning = true;
+        if (startBtn) {
+            startBtn.textContent = 'Pause';
+            startBtn.style.background = '#c0392b';
+        }
+
+        timerInterval = setInterval(() => {
+            totalSeconds--;
+            if (displayEl) {
+                displayEl.textContent = formatTime(totalSeconds);
+            }
+
+            if (totalSeconds <= 0) {
+                clearInterval(timerInterval);
+                isTimerRunning = false;
+                if (startBtn) {
+                    startBtn.textContent = 'Start';
+                    startBtn.style.background = '#d35400';
+                }
+                alert('🍁 Time is up!');
+            }
+        }, 1000);
+    }
+}
+
+function resetTimer() {
+    clearInterval(timerInterval);
+    isTimerRunning = false;
+
+    const hrsInput = document.getElementById('timer-hours');
+    const minsInput = document.getElementById('timer-minutes');
+    const secsInput = document.getElementById('timer-seconds');
+    const startBtn = document.getElementById('timer-start-btn');
+
+    if (hrsInput) hrsInput.value = 0;
+    if (minsInput) minsInput.value = 5;
+    if (secsInput) secsInput.value = 0;
+
+    totalSeconds = 300;
+    const displayEl = document.getElementById('timer-display');
+    if (displayEl) {
+        displayEl.textContent = formatTime(totalSeconds);
+    }
+
+    if (startBtn) {
+        startBtn.textContent = 'Start';
+        startBtn.style.background = '#d35400';
+    }
 }
 
 </script>
